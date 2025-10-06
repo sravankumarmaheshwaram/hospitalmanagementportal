@@ -1,0 +1,650 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* HERO SECTION */
+    .contact-hero {
+      background: linear-gradient(135deg, rgba(83, 155, 184, 0.95), rgba(0, 31, 63, 0.95)), url('{% static "images/slide3.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 75vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      background: linear-gradient(45deg, #ffffff, #f0f8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-hero .lead {
+      font-size: 1.3rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .hero-stat {
+      text-align: center;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .hero-stat h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .hero-stat p {
+      font-size: 0.9rem;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #001f3f;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      font-size: 1rem;
+      color: #6c757d;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* CONTACT CARDS */
+    .contact-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      padding: 25px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(83, 155, 184, 0.15);
+    }
+
+    .contact-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .contact-card .icon-wrapper {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-card:hover .icon-wrapper {
+      transform: rotate(360deg) scale(1.05);
+    }
+
+    .contact-card i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .contact-card h5 {
+      font-weight: 600;
+      color: #001f3f;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .contact-card p {
+      color: #6c757d;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    .contact-card a {
+      color: #539bb8ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .contact-card a:hover {
+      color: #001f3f;
+      transform: translateX(3px);
+    }
+
+    .contact-card a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      transition: width 0.3s ease;
+    }
+
+    .contact-card a:hover::after {
+      width: 100%;
+    }
+
+    /* CONTACT FORM - MATCHING LOGIN/SIGNUP STYLE */
+    .register-form {
+      max-width: 650px;
+      margin: 50px auto;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+      font-size: 1.4rem;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .form-content {
+      padding: 5%;
+      border-radius: 0 0 12px 12px;
+      background: #fff;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+      border: 1px solid #ced4da;
+      padding: 12px 16px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #539bb8ff;
+      box-shadow: 0 0 0 0.2rem rgba(83, 155, 184, 0.25);
+    }
+
+    .input-group-text {
+      background-color: #f1f1f1;
+      border-radius: 1.5rem 0 0 1.5rem;
+      color: #539bb8ff;
+      font-weight: bold;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 10px 25px;
+      width: 40%;
+      cursor: pointer;
+      background: #539bb8ff;
+      color: #fff;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .btnSubmit:hover {
+      background: #001f3f;
+      transform: scale(1.05);
+    }
+
+    .text-center a {
+      color: #539bb8ff;
+      font-weight: bold;
+    }
+
+    .text-center a:hover {
+      text-decoration: underline;
+      color: #001f3f;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: linear-gradient(45deg, #539bb8ff, #001f3f);
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(83, 155, 184, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(83, 155, 184, 0.6);
+    }
+
+    /* MAP SECTION */
+    .map-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .map-placeholder {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 8px;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c757d;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    /* EMERGENCY SECTION */
+    .emergency-section {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      color: white;
+      padding: 60px 0;
+    }
+
+    .emergency-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .emergency-card i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .emergency-card h4 {
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .emergency-card p {
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .emergency-card .btn {
+      background: white;
+      color: #dc3545;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .emergency-card .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .contact-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .contact-hero .lead {
+        font-size: 1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+      
+      .contact-card {
+        padding: 20px 15px;
+      }
+      
+      .contact-card .icon-wrapper {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .contact-card i {
+        font-size: 1.3rem;
+      }
+      
+      .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .hero-stat {
+        padding: 15px;
+      }
+      
+      .register-form {
+        margin: 20px auto;
+      }
+      
+      .form-content {
+        padding: 4%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-stats {
+        display: none;
+      }
+      
+      .contact-hero {
+        min-height: 60vh;
+      }
+      
+      .contact-card {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+</head>
+
+<!-- HERO SECTION -->
+<section class="contact-hero">
+  <div class="container hero-content">
+    <h1>Get In Touch</h1>
+    <p class="lead">We're here to help and answer any questions you might have. Our dedicated team is committed to providing you with exceptional service and support.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <h3>24/7</h3>
+        <p>Emergency Care</p>
+      </div>
+      <div class="hero-stat">
+        <h3>&lt;24h</h3>
+        <p>Response Time</p>
+      </div>
+      <div class="hero-stat">
+        <h3>15+</h3>
+        <p>Years Experience</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT INFO SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Get In Touch</h2>
+      <p>Multiple ways to reach us for appointments, inquiries, or emergency services</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-geo-alt"></i>
+          </div>
+          <h5>Visit Us</h5>
+          <p>123 Healthcare Avenue<br>Medical District<br>City, State 12345</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-telephone"></i>
+          </div>
+          <h5>Call Us</h5>
+          <p>Main: <a href="tel:+1234567890">(123) 456-7890</a><br>
+          Emergency: <a href="tel:911">911</a><br>
+          Appointments: <a href="tel:+1234567891">(123) 456-7891</a></p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <h5>Email Us</h5>
+          <p>General: <a href="mailto:info@hospital.com">info@hospital.com</a><br>
+          Appointments: <a href="mailto:appointments@hospital.com">appointments@hospital.com</a><br>
+          Support: <a href="mailto:support@hospital.com">support@hospital.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM SECTION -->
+<section class="section" style="background: #b6bde7;">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <form method="post" action="/contactus">
+          {% csrf_token %}
+          <div class="register-form">
+            <div class="form">
+              <div class="note">
+                <p>Send Us a Message</p>
+              </div>
+              <div class="form-content">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-person"></i></span>
+                      <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-person"></i></span>
+                      <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                      <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                      <input type="tel" class="form-control" name="phone" placeholder="Phone Number">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                      <select class="form-control" name="subject" required>
+                        <option value="">Select Subject</option>
+                        <option value="appointment">Appointment Request</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="bi bi-chat-text"></i></span>
+                      <textarea class="form-control" name="message" rows="4" placeholder="Your Message" required></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btnSubmit">
+                      <i class="bi bi-send me-2"></i>Send Message
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-4">
+        <div class="map-container">
+          <h4 style="color: #001f3f; font-weight: 700; margin-bottom: 20px;">Find Us</h4>
+          <div class="map-placeholder">
+            <div>
+              <i class="bi bi-map" style="font-size: 3rem; color: #539bb8ff; margin-bottom: 15px;"></i>
+              <p>Interactive Map<br>Coming Soon</p>
+            </div>
+          </div>
+          <div class="text-start">
+            <h6 style="color: #001f3f; font-weight: 600;">Hours of Operation:</h6>
+            <p class="mb-2"><strong>Emergency:</strong> 24/7</p>
+            <p class="mb-2"><strong>Outpatient:</strong> 8:00 AM - 6:00 PM</p>
+            <p class="mb-2"><strong>Visiting Hours:</strong> 9:00 AM - 7:00 PM</p>
+            <p class="mb-0"><strong>Pharmacy:</strong> 7:00 AM - 10:00 PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- DEPARTMENTS SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Department Contacts</h2>
+      <p>Direct contact information for specific departments and services</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+          <h5>Cardiology</h5>
+          <p><a href="tel:+1234567892">(123) 456-7892</a><br>
+          <a href="mailto:cardiology@hospital.com">cardiology@hospital.com</a></p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-bandaid"></i>
+          </div>
+          <h5>Orthopedics</h5>
+          <p><a href="tel:+1234567893">(123) 456-7893</a><br>
+          <a href="mailto:orthopedics@hospital.com">orthopedics@hospital.com</a></p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-lightning"></i>
+          </div>
+          <h5>Neurology</h5>
+          <p><a href="tel:+1234567894">(123) 456-7894</a><br>
+          <a href="mailto:neurology@hospital.com">neurology@hospital.com</a></p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="contact-card">
+          <div class="icon-wrapper">
+            <i class="bi bi-person-hearts"></i>
+          </div>
+          <h5>Gynecology</h5>
+          <p><a href="tel:+1234567895">(123) 456-7895</a><br>
+          <a href="mailto:gynecology@hospital.com">gynecology@hospital.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}

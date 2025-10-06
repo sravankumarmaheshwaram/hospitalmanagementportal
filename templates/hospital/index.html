@@ -1,0 +1,894 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* MODERN ANIMATIONS */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .animate-on-scroll {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .slide-left {
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    .slide-right {
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* MODERN GLASSMORPHISM EFFECTS */
+    .glass-effect {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .glass-dark {
+      backdrop-filter: blur(20px);
+      background: rgba(0, 31, 63, 0.1);
+      border: 1px solid rgba(83, 155, 184, 0.2);
+      box-shadow: 0 8px 32px rgba(83, 155, 184, 0.1);
+    }
+
+    /* ENHANCED HERO SECTION */
+    .hero-section {
+      background: linear-gradient(135deg, rgba(83, 155, 184, 0.95), rgba(0, 31, 63, 0.95)), url('{% static "images/slide1.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(83, 155, 184, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+      animation: gradientShift 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    .hero-content {
+      z-index: 3;
+      position: relative;
+    }
+    
+    .hero-section h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+      line-height: 1.1;
+      background: linear-gradient(45deg, #ffffff, #f0f8ff, #ffffff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease-in-out infinite;
+    }
+    
+    .hero-section .lead {
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      opacity: 0.95;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 25px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      min-width: 120px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-stat:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-stat h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+
+    .hero-stat p {
+      font-size: 0.9rem;
+      margin: 0;
+      opacity: 0.9;
+      color: #f0f8ff;
+    }
+    
+    .hero-buttons .btn {
+      margin: 10px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      padding: 15px 35px;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-buttons .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .hero-buttons .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(45deg, #539bb8ff, #001f3f);
+      border: none;
+      box-shadow: 0 4px 15px rgba(83, 155, 184, 0.4);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(83, 155, 184, 0.6);
+    }
+    
+    .btn-outline-light {
+      border: 2px solid white;
+      color: white;
+    }
+    
+    .btn-outline-light:hover {
+      background: white;
+      color: #539bb8ff;
+      transform: translateY(-3px);
+    }
+
+    /* SPECIALTIES SECTION */
+    .specialties-section {
+      padding: 60px 0;
+      background: #f8f9fa;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #001f3f;
+      margin-bottom: 12px;
+    }
+    
+    .section-title p {
+      font-size: 1rem;
+      color: #6c757d;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .specialty-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 35px 25px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .specialty-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .specialty-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(83, 155, 184, 0.05) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .specialty-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(83, 155, 184, 0.2);
+    }
+
+    .specialty-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .specialty-card:hover::after {
+      transform: scale(1);
+    }
+
+    .specialty-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .specialty-card:hover .specialty-icon {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 10px 25px rgba(83, 155, 184, 0.3);
+    }
+    
+    .specialty-card i {
+      font-size: 2rem;
+      color: white;
+    }
+    
+    .specialty-card h5 {
+      font-weight: 700;
+      color: #001f3f;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .specialty-card p {
+      color: #6c757d;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* FEATURES SECTION */
+    .features-section {
+      padding: 60px 0;
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      color: white;
+    }
+    
+    .feature-item {
+      text-align: center;
+      padding: 25px 15px;
+    }
+    
+    .feature-item i {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      opacity: 0.95;
+    }
+    
+    .feature-item h4 {
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    
+    .feature-item p {
+      opacity: 0.9;
+      line-height: 1.5;
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    /* FAQ SECTION */
+    .faq-section {
+      padding: 60px 0;
+      background: white;
+    }
+    
+    .faq-container {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+    
+    .faq-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      margin-bottom: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-item:hover {
+      box-shadow: 0 8px 20px rgba(83, 155, 184, 0.12);
+    }
+    
+    .faq-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      cursor: pointer;
+      background: #f8f9fa;
+    }
+    
+    .faq-header h5 {
+      margin: 0;
+      font-weight: 600;
+      color: #001f3f;
+      font-size: 1rem;
+    }
+    
+    .faq-answer {
+      display: none;
+      padding: 0 25px 20px 25px;
+      color: #6c757d;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+    
+    .faq-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #539bb8ff;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-item.active .faq-answer {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+    
+    .faq-item.active .faq-toggle {
+      transform: rotate(45deg);
+      background: #001f3f;
+    }
+    
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TESTIMONIALS SECTION */
+    .testimonials-section {
+      padding: 60px 0;
+      background: #f8f9fa;
+    }
+    
+    .testimonial-card {
+      background: white;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      padding: 30px 25px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(83, 155, 184, 0.15);
+    }
+    
+    .testimonial-card img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+      border: 3px solid #539bb8ff;
+    }
+    
+    .testimonial-card h5 {
+      font-weight: 600;
+      color: #001f3f;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    
+    .testimonial-card p {
+      color: #6c757d;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+    
+    .stars {
+      color: #ffc107;
+      font-size: 1.1rem;
+    }
+
+    /* RESPONSIVE IMPROVEMENTS */
+    @media (max-width: 768px) {
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero-section .lead {
+        font-size: 1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+      
+      .specialty-card {
+        padding: 25px 15px;
+      }
+      
+      .specialty-card i {
+        font-size: 2.2rem;
+      }
+      
+      .feature-item {
+        padding: 20px 10px;
+      }
+      
+      .testimonial-card {
+        padding: 25px 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero-section {
+        min-height: 70vh;
+        padding: 20px 0;
+      }
+      
+      .hero-section h1 {
+        font-size: 1.9rem;
+      }
+      
+      .hero-buttons .btn {
+        display: block;
+        width: 80%;
+        margin: 8px auto;
+      }
+      
+      .section-title h2 {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* MODERN HOVER EFFECTS */
+    .specialty-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .specialty-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .specialty-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* LOGIN CARDS SECTION */
+    .login-section {
+      padding: 80px 0;
+      background: white;
+    }
+    
+    .login-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+    
+    .login-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(83, 155, 184, 0.2);
+    }
+    
+    .login-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border-radius: 15px;
+    }
+    
+    .login-card h4 {
+      font-weight: 600;
+      color: #001f3f;
+      margin-bottom: 15px;
+    }
+    
+    .login-card p {
+      color: #6c757d;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .login-card .btn {
+      background: linear-gradient(45deg, #539bb8ff, #001f3f);
+      border: none;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .login-card .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(83, 155, 184, 0.4);
+    }
+  </style>
+</head>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="container hero-content">
+    <h1 class="animate-on-scroll">Excellence in Healthcare Every Day</h1>
+    <p class="lead slide-left">Providing world-class medical care with compassion, innovation, and expertise. Your health is our priority.</p>
+    <div class="hero-buttons slide-right">
+      <a href="/patientclick" class="btn btn-primary"><i class="bi bi-calendar-check me-2"></i>Book Appointment</a>
+      <a href="#contact" class="btn btn-outline-light"><i class="bi bi-telephone me-2"></i>Contact Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat glass-effect">
+        <h3>24/7</h3>
+        <p>Emergency Care</p>
+      </div>
+      <div class="hero-stat glass-effect">
+        <h3>50+</h3>
+        <p>Expert Doctors</p>
+      </div>
+      <div class="hero-stat glass-effect">
+        <h3>15+</h3>
+        <p>Years Experience</p>
+      </div>
+      <div class="hero-stat glass-effect">
+        <h3>10K+</h3>
+        <p>Happy Patients</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPECIALTIES SECTION -->
+<section class="specialties-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Medical Specialties</h2>
+      <p>Comprehensive healthcare services delivered by expert medical professionals using state-of-the-art technology</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+          <h5>Cardiology</h5>
+          <p>Advanced cardiac care with cutting-edge diagnostic tools and minimally invasive procedures for heart conditions.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-bandaid"></i>
+          </div>
+          <h5>Orthopedics</h5>
+          <p>Comprehensive bone and joint care including sports medicine, joint replacement, and rehabilitation services.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-lightning"></i>
+          </div>
+          <h5>Neurology</h5>
+          <p>Expert neurological care for brain, spine, and nervous system disorders with advanced treatment options.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-shield-check"></i>
+          </div>
+          <h5>Oncology</h5>
+          <p>Comprehensive cancer care with personalized treatment plans and supportive care services.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-person-hearts"></i>
+          </div>
+          <h5>Gynecology</h5>
+          <p>Women's health services including preventive care, maternity services, and specialized treatments.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="specialty-card animate-on-scroll">
+          <div class="specialty-icon">
+            <i class="bi bi-eye"></i>
+          </div>
+          <h5>Ophthalmology</h5>
+          <p>Complete eye care services from routine exams to advanced surgical procedures and vision correction.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features-section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="bi bi-clock"></i>
+          <h4>24/7 Emergency</h4>
+          <p>Round-the-clock emergency services with immediate medical attention</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="bi bi-award"></i>
+          <h4>Expert Doctors</h4>
+          <p>Highly qualified medical professionals with years of experience</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="bi bi-gear"></i>
+          <h4>Modern Equipment</h4>
+          <p>State-of-the-art medical technology for accurate diagnosis</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="bi bi-heart"></i>
+          <h4>Compassionate Care</h4>
+          <p>Patient-centered approach with personalized treatment plans</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+      <p>Get answers to common questions about our services, facilities, and procedures</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-header">
+          <h5>Which is the best multispeciality hospital in your area?</h5>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Our hospital is NABH accredited and trusted by thousands of patients every month, offering comprehensive care under one roof with state-of-the-art facilities and expert medical professionals.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-header">
+          <h5>What are the visiting hours?</h5>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          General visiting hours are 9:00 AM – 7:00 PM daily. ICU visits may require prior approval and have specific timings. Please contact our reception for detailed information.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-header">
+          <h5>Do you provide online consultations?</h5>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes, we offer teleconsultations through our digital platform. You can get expert medical advice from the comfort of your home without long wait times. Book your online consultation today.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-header">
+          <h5>What insurance plans do you accept?</h5>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer">
+          We accept most major insurance plans and offer cashless treatment facilities. Please contact our insurance desk for specific coverage details and pre-authorization procedures.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>What Our Patients Say</h2>
+      <p>Real experiences from patients who trust us with their healthcare needs</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="testimonial-card">
+          <img src="{% static 'images/patient1.jpg' %}" alt="Patient" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=SP'">
+          <h5>Srujitha Pasumarti</h5>
+          <p>"The doctors were very professional and supportive throughout my treatment. The nursing staff was exceptional and the facilities are world-class. Highly recommended!"</p>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="testimonial-card">
+          <img src="{% static 'images/patient2.jpeg' %}" alt="Patient" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=RK'">
+          <h5>Ravi Kumar</h5>
+          <p>"Quick diagnosis, excellent nursing care, and smooth admission process. The doctors explained everything clearly and made me feel comfortable. Best hospital experience ever."</p>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="testimonial-card">
+          <img src="{% static 'images/patient3.jpg' %}" alt="Patient" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=AR'">
+          <h5>Ananya Reddy</h5>
+          <p>"I felt completely safe during my surgery and recovery. The medical team was highly skilled and the post-operative care was outstanding. Great doctors and staff!"</p>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-header').addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+</script>
+
+{% endblock content %}

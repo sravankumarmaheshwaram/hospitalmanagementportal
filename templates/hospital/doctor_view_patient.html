@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Patients - Hospital Management</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-left: 240px;
+      background: #f4f6f9;
+    }
+    main {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .menu {
+      background: #2c3e50;
+      height: 100vh;
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .menu .avatar {
+      background: #34495e;
+      padding: 2em 1em;
+      text-align: center;
+    }
+    .menu .avatar img {
+      width: 100px;
+      border-radius: 50%;
+      border: 3px solid #1abc9c;
+    }
+    .menu .avatar h2 {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .menu ul {
+      list-style: none;
+      padding: 1em 0;
+      margin: 0;
+      flex-grow: 1;
+    }
+    .menu ul li {
+      padding: 0.8em 1.5em;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .menu ul li:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .menu ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+    .logout-btn {
+      margin: 20px;
+      display: block;
+      width: calc(100% - 40px);
+      background: #e74c3c;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      transition: background 0.3s;
+      text-align: center;
+    }
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .page-header h2 {
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .page-header p {
+      margin: 0.5rem 0 0 0;
+      opacity: 0.9;
+    }
+
+    .search-section {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .search-form {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-form input {
+      flex: 1;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 0.75rem 1rem;
+    }
+
+    .search-form button {
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      border: none;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .patients-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .table-card-header {
+      font-weight: 600;
+      padding: 1.2rem;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      color: #fff;
+      border-radius: 0;
+      margin: 0;
+    }
+
+    .table {
+      margin: 0;
+    }
+
+    .table thead th {
+      border-top: none;
+      border-bottom: 2px solid #e9ecef;
+      font-weight: 600;
+      color: #495057;
+      padding: 1rem;
+    }
+
+    .table td {
+      padding: 1rem;
+      vertical-align: middle;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .patient-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #539bb8ff;
+    }
+
+    .no-patients {
+      text-align: center;
+      padding: 3rem;
+      color: #6c757d;
+    }
+
+    .no-patients i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: #539bb8ff;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="menu">
+    {% if request.user.is_authenticated %}
+      <header class="avatar">
+        {% if doctor and doctor.profile_pic %}
+          <img src="{{ doctor.profile_pic.url }}" alt="Doctor Profile">
+        {% else %}
+          <img src="{% static 'images/doctor.png' %}" alt="Default Profile">
+        {% endif %}
+        <h2>Dr. {{ request.user.first_name|default:request.user.username }}</h2>
+      </header>
+
+      <ul>
+        <li><a href="{% url 'doctor-dashboard' user_id=request.user.id %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        <li><a href="{% url 'doctor-patient' user_id=request.user.id %}"><i class="bi bi-people"></i> Patients</a></li>
+        <li><a href="{% url 'doctor-appointment' user_id=request.user.id %}"><i class="bi bi-calendar-check"></i> Appointments</a></li>
+      </ul>
+
+      <a href="{% url 'logout' %}" class="logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    {% else %}
+      <header class="avatar">
+        <img src="{% static 'images/doctor.png' %}" alt="Guest Profile">
+        <h2>Guest</h2>
+      </header>
+      <ul>
+        <li><a href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+        <li><a href="{% url 'signup' %}"><i class="bi bi-person-plus"></i> Signup</a></li>
+      </ul>
+    {% endif %}
+  </nav>
+
+  <main>
+    <div class="container-fluid my-4">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h2><i class="fas fa-users mr-3"></i>My Patients</h2>
+        <p>View and manage your assigned patients</p>
+      </div>
+
+      <!-- Search Section -->
+      <div class="search-section">
+        <h5 class="mb-3"><i class="fas fa-search mr-2"></i>Search Patients</h5>
+        <form action="/search" method="get" class="search-form">
+          <input type="search" placeholder="Search by name, symptoms, or mobile..." name="query" id="query" aria-label="Search">
+          <button type="submit">
+            <i class="fas fa-search mr-2"></i>Search
+          </button>
+        </form>
+      </div>
+
+      {% if patients %}
+      <div class="patients-card">
+        <div class="table-card-header">
+          <h6 class="mb-0"><i class="fas fa-list mr-2"></i>Your Patients ({{ patients|length }})</h6>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th><i class="fas fa-user mr-2"></i>Name</th>
+                <th><i class="fas fa-image mr-2"></i>Picture</th>
+                <th><i class="fas fa-stethoscope mr-2"></i>Symptoms</th>
+                <th><i class="fas fa-phone mr-2"></i>Mobile</th>
+                <th><i class="fas fa-map-marker-alt mr-2"></i>Address</th>
+                <th><i class="fas fa-cog mr-2"></i>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td><strong>{{ p.get_name }}</strong></td>
+                <td>
+                  {% if p.profile_pic %}
+                    <img src="{{ p.profile_pic.url }}" alt="Profile Pic" class="patient-avatar" />
+                  {% else %}
+                    <img src="{% static 'images/patient.jpg' %}" alt="Default Profile" class="patient-avatar" />
+                  {% endif %}
+                </td>
+                <td>{{ p.symptoms }}</td>
+                <td>{{ p.mobile }}</td>
+                <td>{{ p.address }}</td>
+                <td>
+                  <a href="{% url 'doctor-view-discharge-patient' user_id=request.user.id %}" class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-eye mr-1"></i>View Details
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% else %}
+      <div class="patients-card">
+        <div class="no-patients">
+          <i class="fas fa-user-times"></i>
+          <h4>No Patients Found</h4>
+          <p class="mb-3">You don't have any assigned patients yet or no patients match your search.</p>
+          <a href="{% url 'doctor-dashboard' user_id=request.user.id %}" class="btn btn-primary">
+            <i class="fas fa-home mr-2"></i>Back to Dashboard
+          </a>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Quick Actions -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header" style="background: linear-gradient(90deg, #539bb8ff, #001f3f); color: white;">
+              <h6 class="mb-0"><i class="fas fa-bolt mr-2"></i>Quick Actions</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 text-center mb-3">
+                  <a href="{% url 'doctor-view-discharge-patient' user_id=request.user.id %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-user-check mr-2"></i>Discharged Patients
+                  </a>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                  <a href="{% url 'doctor-view-appointment' user_id=request.user.id %}" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-calendar mr-2"></i>View Appointments
+                  </a>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                  <a href="{% url 'doctor-dashboard' user_id=request.user.id %}" class="btn btn-outline-info btn-lg">
+                    <i class="fas fa-home mr-2"></i>Dashboard
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

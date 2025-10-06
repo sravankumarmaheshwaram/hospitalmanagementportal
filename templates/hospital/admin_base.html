@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Hospital Management</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-left: 240px;
+      background: #f4f6f9;
+    }
+    main {
+      position: relative;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .menu {
+      background: #2c3e50;
+      height: 100vh;
+      width: 240px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      color: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+    .menu .avatar {
+      background: #34495e;
+      padding: 2em 1em;
+      text-align: center;
+    }
+    .menu .avatar img {
+      width: 100px;
+      border-radius: 50%;
+      border: 3px solid #1abc9c;
+    }
+    .menu .avatar h2 {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .menu ul {
+      list-style: none;
+      padding: 1em 0;
+      margin: 0;
+      flex-grow: 1;
+    }
+    .menu ul li {
+      padding: 0.8em 1.5em;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .menu ul li:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .menu ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+    .logout-btn {
+      margin: 20px;
+      display: block;
+      width: calc(100% - 40px);
+      background: #e74c3c;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      transition: background 0.3s;
+      text-align: center;
+    }
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="menu">
+    {% if request.user.is_authenticated %}
+      <header class="avatar">
+        <img src="{% static 'images/adminpropic.png' %}" alt="Admin Picture">
+        <h2>
+          {% if request.user.first_name %}
+            {{ request.user.first_name }}
+          {% elif request.user.last_name %}
+            {{ request.user.last_name }}
+          {% else %}
+            {{ request.user.username }}
+          {% endif %}
+        </h2>
+      </header>
+
+      <ul>
+        <li><a href="{% url 'admin-dashboard' %}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+        <li><a href="{% url 'admin-doctor' %}"><i class="bi bi-person-badge"></i> Doctors</a></li>
+        <li><a href="{% url 'admin-patient' %}"><i class="bi bi-people"></i> Patients</a></li>
+        <li><a href="{% url 'admin-appointment' %}"><i class="bi bi-calendar-check"></i> Appointments</a></li>
+      </ul>
+
+      <a href="{% url 'logout' %}" class="logout-btn"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    {% else %}
+      <header class="avatar">
+        <img src="{% static 'images/adminpropic.png' %}" alt="Guest Profile">
+        <h2>Guest</h2>
+      </header>
+      <ul>
+        <li><a href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a></li>
+        <li><a href="{% url 'signup' %}"><i class="bi bi-person-plus"></i> Signup</a></li>
+      </ul>
+    {% endif %}
+  </nav>
+
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+</body>
+</html>

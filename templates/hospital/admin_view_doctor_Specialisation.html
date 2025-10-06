@@ -1,0 +1,74 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<style>
+  a:link {
+    text-decoration: none;
+  }
+
+  /* page spacing */
+  .page-row {
+    margin: 2rem 0;
+  }
+
+  /* card-like panel */
+  .panel {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: none;
+  }
+
+  .panel-heading {
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    color: #fff !important;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .table thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .table tbody td {
+    vertical-align: middle;
+  }
+</style>
+
+<div class="container-fluid page-row">
+  <div class="panel">
+    <div class="panel-heading">
+      Department & Doctors
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Doctor Name</th>
+            <th>Mobile</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in doctors %}
+          <tr>
+            <td>{{ d.department }}</td>
+            <td>{{ d.get_name }}</td>
+            <td>{{ d.mobile }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3" class="text-center text-muted py-3">No doctors found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

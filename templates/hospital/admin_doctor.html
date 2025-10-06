@@ -1,0 +1,110 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+
+<style>
+  a {
+    text-decoration: none !important;
+  }
+
+  .card {
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-body {
+    padding: 25px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .card-body h6 {
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .card-body i {
+    font-size: 30px;
+    margin-top: 10px;
+    display: block;
+  }
+
+  /* Color palette */
+  .bg-c-blue {
+    background: linear-gradient(45deg, #4099ff, #73b4ff);
+  }
+
+  .bg-c-green {
+    background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+  }
+
+  .bg-c-yellow {
+    background: linear-gradient(45deg, #FFB64D, #ffcb80);
+  }
+
+  .bg-c-pink {
+    background: linear-gradient(45deg, #FF5370, #ff869a);
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3">
+      <a href="/admin-view-doctor">
+        <div class="card bg-c-blue">
+          <div class="card-body">
+            <h6>Doctor Record</h6>
+            <i class="bi bi-person-vcard-fill"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="/admin-add-doctor">
+        <div class="card bg-c-green">
+          <div class="card-body">
+            <h6>Register Doctor</h6>
+            <i class="bi bi-person-plus-fill"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="/admin-approve-doctor">
+        <div class="card bg-c-yellow">
+          <div class="card-body">
+            <h6>Approve Doctor</h6>
+            <i class="bi bi-check-circle-fill"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-3">
+      <a href="/admin-view-doctor-specialisation">
+        <div class="card bg-c-pink">
+          <div class="card-body">
+            <h6>Doctor Specialisation</h6>
+            <i class="bi bi-hospital-fill"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

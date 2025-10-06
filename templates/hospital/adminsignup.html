@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>LazyCoder || sumit</title>
+  <style type="text/css">
+    body {
+      color: #aa082e;
+      background-color: #b6bde7;
+      font-family: 'Inter', sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+      background: linear-gradient(90deg, #539bb8ff, #001f3f);
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+      font-size: 1.4rem;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .form-content {
+      padding: 5%;
+      border-radius: 0 0 12px 12px;
+      background: #fff;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 10px 25px;
+      width: 40%;
+      cursor: pointer;
+      background: #539bb8ff;
+      color: #fff;
+      font-weight: bold;
+      transition: 0.3s ease;
+    }
+
+    .btnSubmit:hover {
+      background: #001f3f;
+      transform: scale(1.05);
+    }
+
+    .input-group-text {
+      background-color: #f1f1f1;
+      border-radius: 1.5rem 0 0 1.5rem;
+      color: #539bb8ff;
+      font-weight: bold;
+    }
+
+    .text-center a {
+      color: #539bb8ff;
+      font-weight: bold;
+    }
+
+    .text-center a:hover {
+      text-decoration: underline;
+      color: #001f3f;
+    }
+  </style>
+
+</head>
+
+
+<body>
+  {% include "hospital/navbar.html" %}
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+
+  <!--- signup page for admin by admin(sumit)  ---------->
+  <form method="post">
+    {% csrf_token %}
+    <div class="container register-form">
+      <div class="form">
+        <div class="note">
+          <p>Add New Admin To Hospital</p>
+        </div>
+
+        <div class="form-content">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field form.first_name class="form-control" placeholder="First Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field form.username class="form-control" placeholder="Username" %}
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {% render_field form.last_name class="form-control" placeholder="Last Name" %}
+              </div>
+              <div class="form-group">
+                {% render_field form.password class="form-control" placeholder="Password" %}
+              </div>
+
+            </div>
+          </div>
+          <button type="submit" class="btnSubmit">Submit</button>
+          {% for message in messages %}
+          <h3 style='color:red;'> {{ message }} </h3>
+          {% endfor %}
+          <div class="text-center">Already have an account? <a href="adminlogin">Login here</a></div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+  
+
+  {% include "hospital/footer.html" %}
+</body>
+
+</html>

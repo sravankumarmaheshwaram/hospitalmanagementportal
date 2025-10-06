@@ -1,0 +1,394 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+
+    /* HERO SECTION */
+    .about-hero {
+      background: linear-gradient(135deg, rgba(83, 155, 184, 0.9), rgba(0, 31, 63, 0.9)), url('{% static "images/slide2.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .about-hero h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .about-hero .lead {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 1.8rem;
+      opacity: 0.95;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #001f3f;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      font-size: 1rem;
+      color: #6c757d;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* CARDS */
+    .about-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+
+    .about-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(83, 155, 184, 0.15);
+    }
+
+    .about-card i {
+      font-size: 2.5rem;
+      color: #539bb8ff;
+      margin-bottom: 18px;
+      display: block;
+    }
+
+    .about-card h5 {
+      font-weight: 600;
+      color: #001f3f;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+
+    .about-card p {
+      color: #6c757d;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* STATS SECTION */
+    .stats-section {
+      background: linear-gradient(135deg, #539bb8ff, #001f3f);
+      color: white;
+      padding: 60px 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    .stat-item h3 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stat-item p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+
+    /* TEAM SECTION */
+    .team-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      padding: 30px 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      height: 100%;
+    }
+
+    .team-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(83, 155, 184, 0.15);
+    }
+
+    .team-card img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+      border: 3px solid #539bb8ff;
+    }
+
+    .team-card h5 {
+      font-weight: 600;
+      color: #001f3f;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .team-card .role {
+      color: #539bb8ff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .team-card p {
+      color: #6c757d;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: linear-gradient(45deg, #539bb8ff, #001f3f);
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(83, 155, 184, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(83, 155, 184, 0.6);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .about-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .about-hero .lead {
+        font-size: 1rem;
+      }
+      
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+      
+      .about-card {
+        padding: 25px 20px;
+      }
+      
+      .stat-item h3 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<!-- HERO SECTION -->
+<section class="about-hero">
+  <div class="container">
+    <h1>About Our Hospital</h1>
+    <p class="lead">Dedicated to providing exceptional healthcare services with compassion, innovation, and excellence. Your health and well-being are our top priorities.</p>
+  </div>
+</section>
+
+<!-- MISSION SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Mission & Vision</h2>
+      <p>Committed to transforming healthcare through technology, compassion, and medical excellence</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-heart-pulse"></i>
+          <h5>Patient-Centered Care</h5>
+          <p>We prioritize our patients' needs, providing personalized treatment plans and compassionate care that addresses both physical and emotional well-being.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-award"></i>
+          <h5>Medical Excellence</h5>
+          <p>Our team of highly qualified medical professionals uses cutting-edge technology and evidence-based practices to deliver the highest quality healthcare.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-people"></i>
+          <h5>Community Focus</h5>
+          <p>We serve our community with dedication, making healthcare accessible and affordable while building lasting relationships with patients and families.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-item">
+          <h3>15+</h3>
+          <p>Years of Excellence</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-item">
+          <h3>50+</h3>
+          <p>Expert Doctors</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-item">
+          <h3>10,000+</h3>
+          <p>Happy Patients</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="stat-item">
+          <h3>24/7</h3>
+          <p>Emergency Services</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES SECTION -->
+<section class="section" style="background: #f8f9fa;">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Core Values</h2>
+      <p>The principles that guide everything we do in our commitment to exceptional healthcare</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-shield-check"></i>
+          <h5>Integrity</h5>
+          <p>We maintain the highest ethical standards in all our interactions and medical practices.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-lightbulb"></i>
+          <h5>Innovation</h5>
+          <p>We embrace new technologies and methods to improve patient outcomes and experiences.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-hand-thumbs-up"></i>
+          <h5>Respect</h5>
+          <p>We treat every patient, family member, and colleague with dignity and respect.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="about-card">
+          <i class="bi bi-gem"></i>
+          <h5>Excellence</h5>
+          <p>We strive for excellence in everything we do, continuously improving our services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP SECTION -->
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Leadership Team</h2>
+      <p>Meet the dedicated professionals leading our mission to provide exceptional healthcare</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/doctor.png' %}" alt="Chief Medical Officer" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=CMO'">
+          <h5>Dr. Sarah Johnson</h5>
+          <div class="role">Chief Medical Officer</div>
+          <p>Leading our medical team with over 20 years of experience in healthcare administration and patient care.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/admin.png' %}" alt="Hospital Administrator" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=CEO'">
+          <h5>Michael Chen</h5>
+          <div class="role">Hospital Administrator</div>
+          <p>Overseeing hospital operations and ensuring the highest standards of patient care and safety.</p>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="team-card">
+          <img src="{% static 'images/patient.jpg' %}" alt="Director of Nursing" onerror="this.src='https://via.placeholder.com/80x80/539bb8ff/ffffff?text=DON'">
+          <h5>Lisa Rodriguez</h5>
+          <div class="role">Director of Nursing</div>
+          <p>Leading our nursing staff to provide compassionate, evidence-based care to all our patients.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="section" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+  <div class="container text-center">
+    <div class="section-title">
+      <h2>Ready to Experience Quality Healthcare?</h2>
+      <p>Join thousands of patients who trust us with their health and well-being</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <a href="/patientclick" class="btn btn-primary btn-lg me-3 mb-3">
+          <i class="bi bi-calendar-check me-2"></i>Book Appointment
+        </a>
+        <a href="/contactus" class="btn btn-outline-primary btn-lg mb-3">
+          <i class="bi bi-telephone me-2"></i>Contact Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Admin Dashboard</title>
+
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .market-updates {
+      margin: 2em auto;
+      max-width: 1200px;
+    }
+
+    .market-update-block {
+      border-radius: 10px;
+      padding: 1.8em;
+      margin-bottom: 1.5em;
+      text-align: center;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .market-update-block:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+
+    .market-update-block h3 {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .market-update-block h4 {
+      font-size: 1.2em;
+      font-weight: 500;
+      margin: 0.3em 0;
+    }
+
+    .market-update-block p {
+      font-size: 0.9em;
+      margin: 0.2em 0 0;
+      opacity: 0.9;
+    }
+
+    /* Gradient Palette */
+    .bg-c-blue {
+      background: linear-gradient(45deg, #4099ff, #73b4ff);
+    }
+
+    .bg-c-green {
+      background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+    }
+
+    .bg-c-yellow {
+      background: linear-gradient(45deg, #FFB64D, #ffcb80);
+    }
+
+    /* Icons */
+    .market-update-block i {
+      font-size: 32px;
+      margin-top: 12px;
+      display: inline-block;
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="container market-updates">
+    <div class="row">
+      <div class="col-md-4 market-update-gd">
+        <div class="market-update-block bg-c-blue">
+          <h3>{{doctorcount}}</h3>
+          <h4>Total Doctor</h4>
+          <p>Approval Required : {{pendingdoctorcount}}</p>
+          <i class="fa fa-user-md"></i>
+        </div>
+      </div>
+
+      <div class="col-md-4 market-update-gd">
+        <div class="market-update-block bg-c-green">
+          <h3>{{patientcount}}</h3>
+          <h4>Total Patient</h4>
+          <p>Wants to Admit : {{pendingpatientcount}}</p>
+          <i class="fa fa-user-o"></i>
+        </div>
+      </div>
+
+      <div class="col-md-4 market-update-gd">
+        <div class="market-update-block bg-c-yellow">
+          <h3>{{appointmentcount}}</h3>
+          <h4>Total Appointment</h4>
+          <p>Approve Appointments : {{pendingappointmentcount}}</p>
+          <i class="fa fa-calendar"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
