@@ -1,0 +1,19 @@
+{% extends 'hospital/homebase.html' %}
+{% block content %}
+
+<div class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4 p-5 text-center">
+    <h1 class="fw-bold mb-3"> 🏥 Hello, Patient
+</h1>
+    <p class="lead text-muted">Welcome to Hospital Management System</p>
+    <hr class="my-4">
+    <p class="mb-4">Register your account or log in to manage your health records.</p>
+
+    <div class="d-flex justify-content-center gap-3">
+      <a class="btn btn-success btn-lg px-4 rounded-pill" href="/patientsignup">Register Your Account</a>
+      <a class="btn btn-outline-success btn-lg px-4 rounded-pill" href="/patientlogin">Login</a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

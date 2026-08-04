@@ -1,0 +1,170 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #539bb8ff, #001f3f);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .page-header h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .page-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+  }
+
+  .appointments-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .table-card-header {
+    font-weight: 600;
+    padding: 1.2rem;
+    background: linear-gradient(90deg, #539bb8ff, #001f3f);
+    color: #fff;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .table {
+    margin: 0;
+  }
+
+  .table thead th {
+    border-top: none;
+    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    color: #495057;
+    padding: 1rem;
+  }
+
+  .table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .appointment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+  }
+
+  .no-appointments {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+  }
+
+  .no-appointments i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #539bb8ff;
+  }
+</style>
+
+<div class="container-fluid my-4">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2><i class="fas fa-calendar-alt mr-3"></i>Manage Appointments</h2>
+    <p>View and monitor all scheduled appointments</p>
+  </div>
+
+  {% if appointments %}
+  <div class="appointments-card">
+    <div class="table-card-header">
+      <h6 class="mb-0"><i class="fas fa-list mr-2"></i>All Appointments ({{ appointments|length }})</h6>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th><i class="fas fa-user-md mr-2"></i>Doctor Name</th>
+            <th><i class="fas fa-user mr-2"></i>Patient Name</th>
+            <th><i class="fas fa-file-alt mr-2"></i>Description</th>
+            <th><i class="fas fa-calendar mr-2"></i>Date</th>
+            <th><i class="fas fa-info-circle mr-2"></i>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in appointments %}
+          <tr>
+            <td><strong>Dr. {{ a.doctorName }}</strong></td>
+            <td><strong>{{ a.patientName }}</strong></td>
+            <td>{{ a.description }}</td>
+            <td>{{ a.appointmentDate }}</td>
+            <td>
+              <span class="appointment-status">
+                <i class="fas fa-calendar-check mr-1"></i>Scheduled
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="appointments-card">
+    <div class="no-appointments">
+      <i class="fas fa-calendar-times"></i>
+      <h4>No Appointments Found</h4>
+      <p class="mb-3">No appointments have been scheduled yet.</p>
+      <a href="{% url 'admin-dashboard' %}" class="btn btn-primary">
+        <i class="fas fa-home mr-2"></i>Back to Dashboard
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Quick Actions -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header" style="background: linear-gradient(90deg, #539bb8ff, #001f3f); color: white;">
+          <h6 class="mb-0"><i class="fas fa-bolt mr-2"></i>Quick Actions</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-doctor' %}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-user-md mr-2"></i>Manage Doctors
+              </a>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-patient' %}" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-users mr-2"></i>Manage Patients
+              </a>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-dashboard' %}" class="btn btn-outline-info btn-lg">
+                <i class="fas fa-home mr-2"></i>Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,87 @@
+<footer class="footer mt-5">
+  <div class="container py-5">
+    <div class="row">
+      
+      <!-- About Section -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold mb-3 text-light">🏥 Hospital Management</h5>
+        <p class="footer-text">
+          Delivering compassionate care with modern technology.  
+          24/7 Emergency Support, NABH accredited services,  
+          and a commitment to your health and well-being.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold mb-3 text-light">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="/aboutus" class="footer-link">About Us</a></li>
+          <li><a href="/contactus" class="footer-link">Contact Us</a></li>
+          <li><a href="/patientclick" class="footer-link">Book Appointment</a></li>
+          <li><a href="/doctorclick" class="footer-link">Find a Doctor</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold mb-3 text-light">Contact Us</h5>
+        <p class="footer-text mb-1"><strong>Address:</strong> 123 Healthcare Street, Hyderabad, India</p>
+        <p class="footer-text mb-1"><strong>Phone:</strong> +91 98765 43210</p>
+        <p class="footer-text mb-1"><strong>Email:</strong> support@hospital.com</p>
+        <p class="footer-text mb-0"><strong>Timings:</strong> 24/7 Emergency Available</p>
+      </div>
+
+    </div>
+
+    <hr class="footer-divider">
+
+    <!-- Bottom Section -->
+    <div class="text-center footer-bottom">
+      © {{ year|default:2024 }} Hospital Management System. All Rights Reserved.
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #111; /* Modern dark theme */
+    border-top: 1px solid #222;
+  }
+
+  .footer h5 {
+    font-size: 1.3rem;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-text {
+    color: #bbb;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .footer-link {
+    color: #bbb;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .footer-link:hover {
+    color: #00d8ff; /* Aqua hover for modern look */
+    transform: translateX(4px);
+  }
+
+  .footer-divider {
+    border-color: #333;
+  }
+
+  .footer-bottom {
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+</style>

@@ -1,0 +1,85 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+<br><br>
+
+<style>
+  h6 {
+    color: white;
+    font-weight: 600;
+  }
+
+  .order-card {
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 120px; /* increased height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .order-card i {
+    font-size: 28px; /* smaller icon size */
+    margin-top: 10px;
+    opacity: 0.9;
+  }
+
+  .bg-c-blue {
+    background: linear-gradient(135deg, #4099ff, #73b4ff);
+  }
+
+  .bg-c-green {
+    background: linear-gradient(135deg, #2ed8b6, #59e0c5);
+  }
+
+  .bg-c-yellow {
+    background: linear-gradient(135deg, #FFB64D, #ffcb80);
+  }
+</style>
+
+<div class="container">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <a href="/admin-view-appointment" class="text-white text-decoration-none">
+        <div class="card order-card bg-c-blue">
+          <div class="card-body">
+            <h6>View Appointment</h6>
+            <i class="fas fa-calendar"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a href="/admin-add-appointment" class="text-white text-decoration-none">
+        <div class="card order-card bg-c-green">
+          <div class="card-body">
+            <h6>Book Appointment</h6>
+            <i class="fas fa-book-medical"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="col-md-4">
+      <a href="/admin-approve-appointment" class="text-white text-decoration-none">
+        <div class="card order-card bg-c-yellow">
+          <div class="card-body">
+            <h6>Approve Appointment</h6>
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

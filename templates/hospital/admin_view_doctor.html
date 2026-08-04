@@ -1,0 +1,229 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #539bb8ff, #001f3f);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .page-header h2 {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .page-header p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+  }
+
+  .doctors-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .table-card-header {
+    font-weight: 600;
+    padding: 1.2rem;
+    background: linear-gradient(90deg, #539bb8ff, #001f3f);
+    color: #fff;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .table {
+    margin: 0;
+  }
+
+  .table thead th {
+    border-top: none;
+    border-bottom: 2px solid #e9ecef;
+    font-weight: 600;
+    color: #495057;
+    padding: 1rem;
+  }
+
+  .table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .doctor-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #539bb8ff;
+  }
+
+  .status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .status-approved {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+  }
+
+  .status-pending {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    color: white;
+  }
+
+  .delete-btn {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    color: white;
+  }
+
+  .no-doctors {
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
+  }
+
+  .no-doctors i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #539bb8ff;
+  }
+</style>
+
+<div class="container-fluid my-4">
+  <!-- Page Header -->
+  <div class="page-header">
+    <h2><i class="fas fa-user-md mr-3"></i>Manage Doctors</h2>
+    <p>View, approve, and manage doctor registrations</p>
+  </div>
+
+  {% if doctors %}
+  <div class="doctors-card">
+    <div class="table-card-header">
+      <h6 class="mb-0"><i class="fas fa-list mr-2"></i>Registered Doctors ({{ doctors|length }})</h6>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th><i class="fas fa-user mr-2"></i>Name</th>
+            <th><i class="fas fa-image mr-2"></i>Picture</th>
+            <th><i class="fas fa-phone mr-2"></i>Mobile</th>
+            <th><i class="fas fa-map-marker-alt mr-2"></i>Address</th>
+            <th><i class="fas fa-hospital mr-2"></i>Department</th>
+            <th><i class="fas fa-info-circle mr-2"></i>Status</th>
+            <th><i class="fas fa-cog mr-2"></i>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in doctors %}
+          <tr>
+            <td><strong>Dr. {{ d.get_name }}</strong></td>
+            <td>
+              {% if d.profile_pic %}
+                <img src="{{ d.profile_pic.url }}" alt="Profile Pic" class="doctor-avatar" />
+              {% else %}
+                <img src="{% static 'images/doctor.png' %}" alt="Default Profile" class="doctor-avatar" />
+              {% endif %}
+            </td>
+            <td>{{ d.mobile }}</td>
+            <td>{{ d.address }}</td>
+            <td>{{ d.department }}</td>
+            <td>
+              {% if d.status %}
+                <span class="status-badge status-approved">
+                  <i class="fas fa-check mr-1"></i>Approved
+                </span>
+              {% else %}
+                <span class="status-badge status-pending">
+                  <i class="fas fa-clock mr-1"></i>Pending
+                </span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                {% if not d.status %}
+                  <a href="{% url 'approve-doctor' d.id %}" class="btn btn-sm btn-success">
+                    <i class="fas fa-check mr-1"></i>Approve
+                  </a>
+                {% endif %}
+                <a href="{% url 'delete-doctor' d.id %}" class="delete-btn btn-sm" onclick="return confirm('Are you sure you want to delete Dr. {{ d.get_name }}?')">
+                  <i class="fas fa-trash mr-1"></i>Delete
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <div class="doctors-card">
+    <div class="no-doctors">
+      <i class="fas fa-user-md"></i>
+      <h4>No Doctors Found</h4>
+      <p class="mb-3">No doctors have registered yet.</p>
+      <a href="{% url 'admin-dashboard' %}" class="btn btn-primary">
+        <i class="fas fa-home mr-2"></i>Back to Dashboard
+      </a>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Quick Actions -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header" style="background: linear-gradient(90deg, #539bb8ff, #001f3f); color: white;">
+          <h6 class="mb-0"><i class="fas fa-bolt mr-2"></i>Quick Actions</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-patient' %}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-users mr-2"></i>Manage Patients
+              </a>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-appointment' %}" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-calendar mr-2"></i>Manage Appointments
+              </a>
+            </div>
+            <div class="col-md-4 text-center mb-3">
+              <a href="{% url 'admin-dashboard' %}" class="btn btn-outline-info btn-lg">
+                <i class="fas fa-home mr-2"></i>Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,81 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  a:link {
+    text-decoration: none;
+  }
+
+  h6 {
+    text-align: center;
+    margin: 0;
+  }
+
+  .custom-panel {
+    margin-top: 20px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .custom-panel-heading {
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .table-hover tbody tr:hover {
+    background-color: #f9fafb;
+  }
+</style>
+
+<div class="custom-panel">
+  <div class="custom-panel-heading">
+    <h6 class="panel-title">Patient Wants To Admit</h6>
+  </div>
+  <table class="table table-hover mb-0">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Profile Picture</th>
+        <th>Symptoms</th>
+        <th>Mobile</th>
+        <th>Address</th>
+        <th>Approve</th>
+        <th>Reject</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in patients %}
+      <tr>
+        <td>{{ p.get_name }}</td>
+        <td>
+          {% if p.profile_pic %}
+            <img src="{{ p.profile_pic.url }}" alt="Profile Pic" height="40" width="40" />
+          {% else %}
+            <img src="{% static 'images/patient.jpg' %}" alt="Profile Pic" height="40" width="40" />
+          {% endif %}
+        </td>
+        <td>{{ p.symptoms }}</td>
+        <td>{{ p.mobile }}</td>
+        <td>{{ p.address }}</td>
+        <td>
+          <a class="btn btn-sm btn-primary" href="{% url 'approve-patient' p.id %}">
+            <span class="glyphicon glyphicon-ok"></span>
+          </a>
+        </td>
+        <td>
+          <a class="btn btn-sm btn-danger" href="{% url 'reject-patient' p.id %}">
+            <span class="glyphicon glyphicon-trash"></span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

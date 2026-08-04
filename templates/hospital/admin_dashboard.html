@@ -1,0 +1,208 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  /* Unified card styles */
+  .summary-card {
+    border-radius: 12px;
+    padding: 1.8rem;
+    color: #fff;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .summary-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+
+  .summary-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .summary-card h6 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .summary-card p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  .summary-card .icon {
+    margin-top: 1rem;
+  }
+
+  .summary-card i {
+    font-size: 28px;
+    opacity: 0.95;
+  }
+
+  /* Gradient palette */
+  .bg-c-pink {
+    background: linear-gradient(135deg, #539bb8ff, #001f3f);
+  }
+
+  .bg-c-yellow {
+    background: linear-gradient(135deg, #001f3f, #539bb8ff);
+  }
+
+  .bg-c-blue {
+    background: linear-gradient(135deg, #539bb8ff, #4a90a4);
+  }
+
+  /* Table card headers */
+  .table-card-header {
+    font-weight: 600;
+    padding: 0.8rem;
+    background: linear-gradient(90deg, #539bb8ff, #001f3f);
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+  }
+</style>
+
+<div class="container my-4">
+  <div class="row g-4">
+    <!-- Doctor card -->
+    <div class="col-md-4">
+      <div class="card order-card summary-card bg-c-pink">
+        <div class="meta">
+          <h3>{{ doctorcount }}</h3>
+          <h6>Total Doctors</h6>
+          <p>Approval Required: {{ pendingdoctorcount }}</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-user-md"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Patient card -->
+    <div class="col-md-4">
+      <div class="card order-card summary-card bg-c-yellow">
+        <div class="meta">
+          <h3>{{ patientcount }}</h3>
+          <h6>Total Patients</h6>
+          <p>Wants to Admit: {{ pendingpatientcount }}</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-user-injured"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointment card -->
+    <div class="col-md-4">
+      <div class="card order-card summary-card bg-c-blue">
+        <div class="meta">
+          <h3>{{ appointmentcount }}</h3>
+          <h6>Total Appointments</h6>
+          <p>Approve Appointments: {{ pendingappointmentcount }}</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-calendar"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent lists -->
+<div class="container my-4">
+  <div class="row g-4">
+    <!-- Recent Doctors -->
+    <div class="col-md-6">
+      <div class="card border-0">
+        <div class="table-card-header text-center">Recent Doctors</div>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Mobile</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in doctors %}
+              <tr>
+                <td class="fw-semibold">{{ d.get_name }}</td>
+                <td>{{ d.department }}</td>
+                <td>{{ d.mobile }}</td>
+                <td>
+                  {% if d.status %}
+                    <span class="badge bg-success">Permanent</span>
+                  {% else %}
+                    <span class="badge bg-warning text-dark">On Hold</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-center text-muted py-3">No doctors found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Patients -->
+    <div class="col-md-6">
+      <div class="card border-0">
+        <div class="table-card-header text-center" style="background: linear-gradient(90deg,#10b981,#34d399);">
+          Recent Patients
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Symptoms</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in patients %}
+              <tr>
+                <td class="fw-semibold">{{ p.get_name }}</td>
+                <td>{{ p.symptoms }}</td>
+                <td>{{ p.mobile }}</td>
+                <td>{{ p.address }}</td>
+                <td>
+                  {% if p.status %}
+                    <span class="badge bg-success">Admitted</span>
+                  {% else %}
+                    <span class="badge bg-warning text-dark">On Hold</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center text-muted py-3">No patients found</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

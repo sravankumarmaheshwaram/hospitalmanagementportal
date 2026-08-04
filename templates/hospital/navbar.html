@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Google Font for Clean Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Modern Navbar Styling */
+  .navbar-custom {
+    background: linear-gradient(90deg, #539bb8ff, #001f3f); /* Light to deep contrast */
+    border-bottom: none; /* Clean look */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ffffff !important; /* White text for contrast */
+    letter-spacing: 0.5px;
+  }
+
+  .nav-link {
+    color: #f0f0f0 !important; /* Light text */
+    font-weight: 500;
+    margin-right: 15px;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .nav-link:hover {
+    color: #ffd700 !important; /* Gold highlight on hover */
+    transform: translateY(-2px);
+  }
+
+  .navbar-toggler {
+    border: none;
+  }
+  .navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* Active Link Styling */
+  .nav-link.active {
+    color: #ffd700 !important; /* Gold active link */
+    font-weight: 600;
+    border-bottom: 2px solid #ffd700;
+  }
+
+  /* Optional: Change the hamburger icon to white */
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+</style>
+
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">Hospital Management</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout ({{ user.username }})</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'unified_login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'unified_signup' %}">Sign Up</a></li>
+          {% endif %}
+          <li class="nav-item"><a class="nav-link" href="/aboutus">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contactus">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+  a:link {
+    text-decoration: none;
+  }
+
+  /* spacing from sidebar */
+  .page-row {
+    margin: 2rem 0;
+  }
+
+  /* card-like panel */
+  .panel {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: none;
+    background: #fff;
+  }
+
+  .panel-heading {
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    color: #fff !important;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  .table thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .table tbody td {
+    vertical-align: middle;
+  }
+
+  .table img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .btn-xs {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+  }
+</style>
+
+<div class="container-fluid page-row">
+  <div class="panel">
+    <div class="panel-heading">
+      Doctors Applied for Registration
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Profile Picture</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Department</th>
+            <th>Approve</th>
+            <th>Reject</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for d in doctors %}
+          <tr>
+            <td>{{ d.get_name }}</td>
+            <td>
+              {% if d.profile_pic %}
+                <img src="{{ d.profile_pic.url }}" alt="Profile Pic" height="40" width="40">
+              {% else %}
+                <img src="{% static 'images/doctor.png' %}" alt="Profile Pic" height="40" width="40">
+              {% endif %}
+            </td>
+            <td>{{ d.mobile }}</td>
+            <td>{{ d.address }}</td>
+            <td>{{ d.department }}</td>
+            <td>
+              <a class="btn btn-success btn-xs" href="{% url 'approve-doctor' d.id %}">
+                <i class="fa fa-check"></i>
+              </a>
+            </td>
+            <td>
+              <a class="btn btn-danger btn-xs" href="{% url 'reject-doctor' d.id %}">
+                <i class="fa fa-times"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="text-center text-muted py-3">No pending doctors</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
